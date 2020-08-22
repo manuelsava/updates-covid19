@@ -34,6 +34,14 @@ const ProvinciaCallObj = {
   asynchronous: true,
 }
 
+function formatDate(date){
+    var res = date.substring(0, 10);
+    var values = res.split("-");
+    var finalDate = values[2] + "/" + values[1] + "/" + values[0];
+
+    return finalDate;
+}
+
 function callNazione(call, callback){
   var xhr = new XMLHttpRequest();
 
@@ -118,6 +126,9 @@ function displayNazione(response){
   var terapia = new Array();
   var tamponi = new Array();
   var totalePositivi = new Array();
+  var dimessiGuariti = new Array();
+  var totaleCasi = new Array();
+  var dimessiGuariti = new Array();
 
   function parseDatass(item, index, arr){
     casi.push(item.nuovi_positivi);
@@ -126,12 +137,20 @@ function displayNazione(response){
     terapia.push(item.terapia_intensiva);
     tamponi.push(item.tamponi);
     totalePositivi.push(item.totale_positivi);
+    dimessiGuariti.push(item.dimessi_guariti);
+    totaleCasi.push(item.totale_casi);
+    dimessiGuariti.push(item.dimessi_guariti);
   }
 
   resp.forEach(parseDatass);
 
+  for(var i = 0; i < dates.length; i++){
+    dates[i] = formatDate(dates[i]);
+  }
+
   document.getElementById("ultimoAggiornamento").innerHTML = "Ultimo aggiornamento <br>" + dates[dates.length - 1];
 
+  var guaritiOggi = dimessiGuariti[dimessiGuariti.length - 2] - dimessiGuariti[dimessiGuariti.length - 3];
   var positiviOggi = casi[casi.length - 1];
   var rateoPositivi = positiviOggi - casi[casi.length - 2];
   var decessiOggi = decessi[decessi.length - 1] - decessi[decessi.length - 2];
@@ -234,6 +253,40 @@ function displayNazione(response){
     styleText:           true
   });
 
+  var guariti = Circles.create({
+    id:                  'guaritiNaz',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return guaritiOggi;},
+    colors:              ["#427bf5"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+
+  var totGuariti = Circles.create({
+    id:                  'totGuaritiNaz',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return dimessiGuariti[dimessiGuariti.length -1];},
+    colors:              ["#42cbf5"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+
   var tamponiNazionale = Circles.create({
     id:                  'tamponi',
     radius:              90,
@@ -285,6 +338,23 @@ function displayNazione(response){
     styleWrapper:        true,
     styleText:           true
   });
+
+  var totCasi = Circles.create({
+    id:                  'totCasiNaz',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return totaleCasi[totaleCasi.length -1];},
+    colors:              ["#5828a6"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
 }
 
 function callRegione(call, callback, regione){
@@ -311,6 +381,8 @@ function displayRegione(response, regione){
   var terapia = new Array();
   var tamponi = new Array();
   var totalePositivi = new Array();
+  var dimessiGuariti = new Array();
+  var totaleCasi = new Array();
 
   function parseDatass(item, index, arr){
     if(regione.localeCompare(item.denominazione_regione) == 0){
@@ -320,11 +392,18 @@ function displayRegione(response, regione){
       terapia.push(item.terapia_intensiva);
       tamponi.push(item.tamponi);
       totalePositivi.push(item.totale_positivi);
+      dimessiGuariti.push(item.dimessi_guariti);
+      totaleCasi.push(item.totale_casi);
     }
   }
 
   resp.forEach(parseDatass);
 
+  for(var i = 0; i < dates.length; i++){
+    dates[i] = formatDate(dates[i]);
+  }
+
+  var guaritiOggi = dimessiGuariti[dimessiGuariti.length - 1] - dimessiGuariti[dimessiGuariti.length - 2];
   var positiviOggi = casi[casi.length - 1];
   var rateoPositivi = positiviOggi - casi[casi.length - 2];
   var decessiOggi = decessi[decessi.length - 1] - decessi[decessi.length - 2];
@@ -410,6 +489,40 @@ function displayRegione(response, regione){
     styleText:           true
   });
 
+  var guariti = Circles.create({
+    id:                  'guariti',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return guaritiOggi;},
+    colors:              ["#427bf5"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+
+  var totGuariti = Circles.create({
+    id:                  'totGuariti',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return dimessiGuariti[dimessiGuariti.length -1];},
+    colors:              ["#42cbf5"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+
   var tamponiNazionale = Circles.create({
     id:                  'tamponiReg',
     radius:              90,
@@ -461,6 +574,24 @@ function displayRegione(response, regione){
     styleWrapper:        true,
     styleText:           true
   });
+
+var totCasi = Circles.create({
+  id:                  'totCasi',
+  radius:              90,
+  value:               1000,
+  maxValue:            100000000,
+  width:               10,
+  text:                function(value){return totaleCasi[totaleCasi.length -1];},
+  colors:              ["#5828a6"],
+  duration:            400,
+  wrpClass:            'circles-wrp',
+  textClass:           'circles-text',
+  valueStrokeClass:    'circles-valueStroke',
+  maxValueStrokeClass: 'circles-maxValueStroke',
+  styleWrapper:        true,
+  styleText:           true
+});
+
 }
 
 function callProvincia(call, callback, provincia){
@@ -492,6 +623,11 @@ function displayProvincia(response, provincia){
   }
 
   resp.forEach(parseDatass);
+
+  for(var i = 0; i < dates.length; i++){
+    dates[i] = formatDate(dates[i]);
+  }
+
   positivi.push(casi[0]);
   for(var i = 1; i < casi.length; i++){
     positivi.push(casi[i] - casi[i - 1]);
@@ -563,7 +699,7 @@ function displayProvincia(response, provincia){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return casi[casi.length - 1];},
-    colors:              ["lightgreen", "#ec716f"],
+    colors:              ["#5828a6"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',

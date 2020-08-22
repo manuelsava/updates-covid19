@@ -30,16 +30,28 @@
       <div data-aos="flip-left" class="circle" id="tamponi"></div>
     </div>
     <div class = "circles" style = "text-align:center; float:left;">
-      <h4>Totale Terapia intensiva</h4>
-      <div data-aos="flip-left" class="circle" id="terapia"></div>
-    </div>
-    <div class = "circles" style = "text-align:center; float:left;">
       <h4>Totale Positivi</h4>
       <div data-aos="flip-left" class="circle" id="totPositivi"></div>
     </div>
     <div class = "circles" style = "text-align:center; float:left;">
+      <h4>Guariti oggi</h4>
+      <div data-aos="flip-left" class="circle" id="guaritiNaz"></div>
+    </div>
+    <div class = "circles" style = "text-align:center; float:left;">
+      <h4>Totale Guariti</h4>
+      <div data-aos="flip-left" class="circle" id="totGuaritiNaz"></div>
+    </div>
+    <div class = "circles" style = "text-align:center; float:left;">
+      <h4>Totale Terapia intensiva</h4>
+      <div data-aos="flip-left" class="circle" id="terapia"></div>
+    </div>
+    <div class = "circles" style = "text-align:center; float:left;">
       <h4>Totale Decessi</h4>
       <div data-aos="flip-left" class="circle" id="totDecessi"></div>
+    </div>
+    <div class = "circles" style = "text-align:center; float:left;">
+      <h4>Totale Casi</h4>
+      <div data-aos="flip-left" class="circle" id="totCasiNaz"></div>
     </div>
 
     <h2 style = "text-align:center;"> Seleziona Regione </h2>
@@ -60,16 +72,28 @@
       <div data-aos="flip-left" class="circle" id="tamponiReg"></div>
     </div>
     <div class = "circles" style = "text-align:center; float:left;">
-      <h4>Totale Terapia intensiva</h4>
-      <div data-aos="flip-left" class="circle" id="terapiaReg"></div>
-    </div>
-    <div class = "circles" style = "text-align:center; float:left;">
       <h4>Totale Positivi</h4>
       <div data-aos="flip-left" class="circle" id="totPositiviReg"></div>
     </div>
     <div class = "circles" style = "text-align:center; float:left;">
+      <h4>Guariti oggi</h4>
+      <div data-aos="flip-left" class="circle" id="guariti"></div>
+    </div>
+    <div class = "circles" style = "text-align:center; float:left;">
+      <h4>Totale Guariti</h4>
+      <div data-aos="flip-left" class="circle" id="totGuariti"></div>
+    </div>
+    <div class = "circles" style = "text-align:center; float:left;">
+      <h4>Totale Terapia intensiva</h4>
+      <div data-aos="flip-left" class="circle" id="terapiaReg"></div>
+    </div>
+    <div class = "circles" style = "text-align:center; float:left;">
       <h4>Totale Decessi</h4>
       <div data-aos="flip-left" class="circle" id="totDecessiReg"></div>
+    </div>
+    <div class = "circles" style = "text-align:center; float:left;">
+      <h4>Totale Casi</h4>
+      <div data-aos="flip-left" class="circle" id="totCasi"></div>
     </div>
 
     <h2 style = "text-align:center;"> Seleziona Provincia </h2>

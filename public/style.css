@@ -17,7 +17,7 @@ footer p{
 }
 
 .circles-text{
-  font-size: xxx-large!important;
+  font-size: 45px!important;
 }
 
 .circles {
@@ -26,5 +26,5 @@ footer p{
 }
 
 @media screen and (max-width: 600px) {
-  
+
 }
