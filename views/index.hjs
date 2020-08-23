@@ -11,7 +11,7 @@
   </head>
   <body>
     <h1 style = "text-align: center;"> Live Covid-19 Italia </h1>
-    <h2 style = "text-align: center"> Ottieni informazioni sull'andamento in tempo reale sulle regioni e province italiane </h2><br>
+    <h2 style = "text-align: center"> Ottieni informazioni in tempo reale sull'andamentos delle regioni e province italiane </h2><br>
     <h2 id= "ultimoAggiornamento" style = "text-align:center;"></h2>
     <select class="js-example-responsive" id="country">
       <option selected value = "Italia"> Italia </option>
