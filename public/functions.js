@@ -34,6 +34,22 @@ const ProvinciaCallObj = {
   asynchronous: true,
 }
 
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 function formatDate(date){
     var res = date.substring(0, 10);
     var values = res.split("-");
@@ -89,32 +105,42 @@ function fillProvincia(call, callback){
 
 function fillSelectProvincia(response){
   let resp = JSON.parse(response);
+  var provinciaCookie = getCookie("provincia");
+
+  if(provinciaCookie.localeCompare("") == 0){
+    document.cookie = "provincia=" + "MB";
+    provinciaCookie = "MB"
+  }
 
   function fill(item, index, arr){
-    var mb = "MB";
-    if(mb.localeCompare(item.sigla_provincia) == 0)
+    if(provinciaCookie.localeCompare(item.sigla_provincia) == 0)
       $('#SelectProvincia').append('<option selected value="' + item.sigla_provincia + '">' + item.sigla_provincia + '</option>');
     else
       $('#SelectProvincia').append('<option value="' + item.sigla_provincia + '">' + item.sigla_provincia + '</option>');
   }
 
   resp.forEach(fill)
-  callProvincia(ProvinciaCallObj, displayProvincia, "MB");
+  callProvincia(ProvinciaCallObj, displayProvincia, provinciaCookie);
 }
 
 function fillSelectRegione(response){
   let resp = JSON.parse(response);
+  var regioneCookie = getCookie("regione");
+
+  if(regioneCookie.localeCompare("") == 0){
+    document.cookie = "regione=" + "Lombardia";
+    regioneCookie = "Lombardia";
+  }
 
   function fill(item, index, arr){
-    var lombardia = "Lombardia";
-    if(lombardia.localeCompare(item.denominazione_regione) == 0)
+    if(regioneCookie.localeCompare(item.denominazione_regione) == 0)
       $('#SelectRegione').append('<option selected value="' + item.denominazione_regione + '">' + item.denominazione_regione + '</option>');
     else
       $('#SelectRegione').append('<option value="' + item.denominazione_regione + '">' + item.denominazione_regione + '</option>');
   }
 
   resp.forEach(fill)
-  callRegione(RegioniCallObj, displayRegione, "Lombardia");
+  callRegione(RegioniCallObj, displayRegione, regioneCookie);
 }
 
 function displayNazione(response){

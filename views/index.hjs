@@ -10,8 +10,8 @@
     <title>COVID-19 World</title>
   </head>
   <body>
-    <h1 style = "text-align: center;"> Welcome to Covid-19 World! </h1>
-    <h2 style = "text-align: center"> Get information about Covid-19 trend all around the world </h2><br>
+    <h1 style = "text-align: center;"> Live Covid-19 Italia </h1>
+    <h2 style = "text-align: center"> Ottieni informazioni sull'andamento in tempo reale sulle regioni e province italiane </h2><br>
     <h2 id= "ultimoAggiornamento" style = "text-align:center;"></h2>
     <select class="js-example-responsive" id="country">
       <option selected value = "Italia"> Italia </option>
@@ -129,10 +129,12 @@
 <script type = "text/javascript">
   function loadRegioneDatas(regione){
     callRegione(RegioniCallObj, displayRegione, regione);
+    document.cookie = "regione=" + regione;
   }
 
   function loadProvinciaDatas(provincia){
     callProvincia(ProvinciaCallObj, displayProvincia, provincia);
+    document.cookie = "provincia=" + provincia;
   }
 
   callNazione(ajaxcallObj, displayNazione);
