@@ -4,6 +4,14 @@ $(document).ready(function() {
     $('#SelectProvincia').select2();
 });
 
+var chartNazione = null;
+var chartRegione = null;
+var chartRegione = null;
+
+var responseNazioni = null;
+var responseRegioni = null;
+var responseProvince = null;
+
 const RegioniCallObj = {
   method: 'GET',
   url: 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json',
@@ -16,22 +24,16 @@ const ajaxcallObj = {
   asynchronous: true,
 }
 
-const fillRegioneObj = {
-  method: 'GET',
-  url: 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni-latest.json',
-  asynchronous: true,
-}
-
-const fillProvinciaObj = {
-  method: 'GET',
-  url: 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province-latest.json',
-  asynchronous: true,
-}
-
 const ProvinciaCallObj = {
   method: 'GET',
   url: 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json',
   asynchronous: true,
+}
+
+const NationsCallObj = {
+  method: 'GET',
+  url: 'https://cors-anywhere.herokuapp.com/https://opendata.ecdc.europa.eu/covid19/casedistribution/json/',
+  asynchronous: false,
 }
 
 function getCookie(cname) {
@@ -58,13 +60,13 @@ function formatDate(date){
     return finalDate;
 }
 
-function callNazione(call, callback){
+function getResource(call, callback, nazione){
   var xhr = new XMLHttpRequest();
 
   xhr.onreadystatechange = function(){
     if(xhr.readyState === 4){
       if(xhr.status === 200){
-        callback(xhr.response);
+        callback(xhr.response, nazione);
       }
     }
   }
@@ -73,39 +75,30 @@ function callNazione(call, callback){
   xhr.send();
 }
 
-function fillRegione(call, callback){
-  var xhr = new XMLHttpRequest();
+function fillNations(nazioneCookie){
+  var resp = JSON.parse('["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua_and_Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bonaire", "Bosnia_and_Herzegovina", "Botswana", "Brazil", "British_Virgin_Islands", "Brunei_Darussalam", "Bulgaria", "Burkina_Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape_Verde", "Cases_on_an_international_conveyance_Japan", "Cayman_Islands", "Central_African_Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa_Rica", "Cote_dIvoire", "Croatia", "Cuba", "Curaao", "Cyprus", "Czechia", "Democratic_Republic_of_the_Congo", "Denmark", "Djibouti", "Dominica", "Dominican_Republic", "Ecuador", "Egypt", "El_Salvador", "Equatorial_Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Falkland_Islands_(Malvinas)", "Faroe_Islands", "Fiji", "Finland", "France", "French_Polynesia", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea_Bissau", "Guyana", "Haiti", "Holy_See", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle_of_Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nepal", "Netherlands", "New_Caledonia", "New_Zealand", "Nicaragua", "Niger", "Nigeria", "North_Macedonia", "Northern_Mariana_Islands", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua_New_Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto_Rico", "Qatar", "Romania", "Russia", "Rwanda", "Saint_Kitts_and_Nevis", "Saint_Lucia", "Saint_Vincent_and_the_Grenadines", "San_Marino", "Sao_Tome_and_Principe", "Saudi_Arabia", "Senegal", "Serbia", "Seychelles", "Sierra_Leone", "Singapore", "Sint_Maarten", "Slovakia", "Slovenia", "Somalia", "South_Africa", "South_Korea", "South_Sudan", "Spain", "Sri_Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Thailand", "Timor_Leste", "Togo", "Trinidad_and_Tobago", "Tunisia", "Turkey", "Turks_and_Caicos_islands", "Uganda", "Ukraine", "United_Arab_Emirates", "United_Kingdom", "United_Republic_of_Tanzania", "United_States_of_America", "United_States_Virgin_Islands", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Western_Sahara", "Yemen", "Zambia", "Zimbabwe"]'
+  );
 
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState === 4){
-      if(xhr.status === 200){
-        callback(xhr.response);
-      }
-    }
+  function fill(item, index, arr){
+    if(nazioneCookie.localeCompare(item) == 0)
+      $('#country').append('<option selected value="' + item + '">' + item + '</option>');
+    else
+      $('#country').append('<option value="' + item + '">' + item + '</option>');
   }
 
-  xhr.open(call.method, call.url, call.asynchronous);
-  xhr.send();
-}
+  resp.forEach(fill)
 
-function fillProvincia(call, callback){
-  var xhr = new XMLHttpRequest();
-
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState === 4){
-      if(xhr.status === 200){
-        callback(xhr.response);
-      }
-    }
-  }
-
-  xhr.open(call.method, call.url, call.asynchronous);
-  xhr.send();
+  if(nazioneCookie.localeCompare("Italy") == 0)
+    getResource(ajaxcallObj, displayNazione);
+  else
+    getResource(NationsCallObj, displayOtherNazione, nazioneCookie);
 }
 
 function fillSelectProvincia(response){
   let resp = JSON.parse(response);
+  responseProvince = resp;
   var provinciaCookie = getCookie("provincia");
+  var visited = new Array();
 
   if(provinciaCookie.localeCompare("") == 0){
     document.cookie = "provincia=" + "MB";
@@ -113,19 +106,57 @@ function fillSelectProvincia(response){
   }
 
   function fill(item, index, arr){
-    if(provinciaCookie.localeCompare(item.sigla_provincia) == 0)
-      $('#SelectProvincia').append('<option selected value="' + item.sigla_provincia + '">' + item.sigla_provincia + '</option>');
-    else
-      $('#SelectProvincia').append('<option value="' + item.sigla_provincia + '">' + item.sigla_provincia + '</option>');
+    if (!visited.includes(item.sigla_provincia)){
+      visited.push(item.sigla_provincia);
+      if(provinciaCookie.localeCompare(item.sigla_provincia) == 0)
+        $('#SelectProvincia').append('<option selected value="' + item.sigla_provincia + '">' + item.sigla_provincia + '</option>');
+      else
+        $('#SelectProvincia').append('<option value="' + item.sigla_provincia + '">' + item.sigla_provincia + '</option>');
+    }
   }
 
   resp.forEach(fill)
-  callProvincia(ProvinciaCallObj, displayProvincia, provinciaCookie);
+  displayProvincia(provinciaCookie);
+}
+
+function fillSelectNazione(response){
+  var start = response.indexOf("{", 2);
+  response = response.substring(start, response.length - 2);
+  var finalResponse = "[" + response;
+
+  let resp = JSON.parse(finalResponse);
+  responseNazioni = resp;
+  var nazioneCookie = getCookie("nazione");
+  var visitedNations = new Array();
+
+  if(nazioneCookie.localeCompare("") == 0){
+    document.cookie = "nazione=" + "Italy";
+    nazioneCookie = "Italy"
+  }
+
+  function fill(item, index, arr){
+    if (!visitedNations.includes(item.countriesAndTerritories)){
+      visitedNations.push(item.countriesAndTerritories);
+      if(nazioneCookie.localeCompare(item.countriesAndTerritories) == 0){
+        $('#country').append('<option selected value="' + item.countriesAndTerritories + '">' + item.countriesAndTerritories + '</option>');
+      } else{
+        $('#country').append('<option value="' + item.countriesAndTerritories + '">' + item.countriesAndTerritories + '</option>');
+      }
+    }
+  }
+
+  resp.forEach(fill)
+  if(nazioneCookie.localeCompare("Italy") == 0)
+    getResource(ajaxcallObj, displayNazione);
+  else
+    getResource(NationsCallObj, displayOtherNazione, nazioneCookie);
 }
 
 function fillSelectRegione(response){
   let resp = JSON.parse(response);
+  responseRegioni = resp;
   var regioneCookie = getCookie("regione");
+  var visited = new Array()
 
   if(regioneCookie.localeCompare("") == 0){
     document.cookie = "regione=" + "Lombardia";
@@ -133,14 +164,17 @@ function fillSelectRegione(response){
   }
 
   function fill(item, index, arr){
+  if (!visited.includes(item.denominazione_regione)){
+    visited.push(item.denominazione_regione);
     if(regioneCookie.localeCompare(item.denominazione_regione) == 0)
       $('#SelectRegione').append('<option selected value="' + item.denominazione_regione + '">' + item.denominazione_regione + '</option>');
     else
       $('#SelectRegione').append('<option value="' + item.denominazione_regione + '">' + item.denominazione_regione + '</option>');
+    }
   }
 
   resp.forEach(fill)
-  callRegione(RegioniCallObj, displayRegione, regioneCookie);
+  displayRegione(regioneCookie);
 }
 
 function displayNazione(response){
@@ -191,7 +225,9 @@ function displayNazione(response){
   percentualeContagi = percentualeContagi.toFixed(2);
 
   var ctx = document.getElementById('AndamentoGenerale').getContext('2d');
-  var chart = new Chart(ctx, {
+  if(chartNazione)
+    chartNazione.destroy();
+  chartNazione = new Chart(ctx, {
       // The type of chart we want to create
       type: 'line',
 
@@ -209,24 +245,6 @@ function displayNazione(response){
       // Configuration options go here
       options: {}
   });
-
-/*  new Chart(document.getElementById("positiviDecessi"), {
-    type: 'pie',
-    data: {
-      labels: ["Positivi", "Decessi"],
-      datasets: [{
-        label: "Population (millions)",
-        backgroundColor: ["green", "red"],
-        data: [positiviOggi, decessiOggi]
-      }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Positivi e Decessi'
-      }
-    }
-  });*/
 
   var positiviNazionale = Circles.create({
     id:                  'positivi',
@@ -398,8 +416,148 @@ function callRegione(call, callback, regione){
   xhr.send();
 }
 
-function displayRegione(response, regione){
-  let resp = JSON.parse(response);
+function displayOtherNazione(response, nazioneCookie){
+  var start = response.indexOf("{", 2);
+  response = response.substring(start, response.length - 2);
+  var finalResponse = "[" + response;
+
+  let resp = JSON.parse(finalResponse);
+  var casi = 0;
+  var dates = new Array();
+  var positivi = new Array();
+  var decessi = new Array();
+  var totaleDecessi = 0;
+
+  function parseDatass(item, index, arr){
+    if(nazioneCookie.localeCompare(item.countriesAndTerritories) == 0){
+      positivi.push(item.cases);
+      dates.push(item.dateRep);
+      decessi.push(item.deaths);
+      casi += item.cases;
+      totaleDecessi += item.deaths;
+    }
+  }
+
+  resp.forEach(parseDatass);
+
+  positivi.reverse();
+  dates.reverse();
+  decessi.reverse();
+
+  document.getElementById("ultimoAggiornamento").innerHTML = "Ultimo aggiornamento <br>" + dates[dates.length - 1];
+
+  var positiviOggi = positivi[positivi.length - 1];
+  var rateoPositivi = positiviOggi - positivi[positivi.length - 2];
+  var decessiOggi = decessi[decessi.length - 1];
+  var rateoDecessi = decessiOggi - (decessi[decessi.length -2]);
+
+  var ctx = document.getElementById('AndamentoGenerale').getContext('2d');
+
+  if(chartNazione)
+    chartNazione.destroy();
+  chartNazione = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'line',
+
+      // The data for our dataset
+      data: {
+          labels: dates,
+          datasets: [{
+              label: 'Contagi',
+              backgroundColor: 'rgb(25, 94, 131)',
+              borderColor: 'rgb(25, 94, 131)',
+              data: positivi
+          }]
+      },
+
+      options: {}
+  });
+
+  var positiviNazionale = Circles.create({
+    id:                  'positivi',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return positiviOggi + "<br>" + (rateoPositivi<0?"":"+") + rateoPositivi;},
+    colors:              ["green", "#ec716f"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+
+  var decessiNazionale = Circles.create({
+    id:                  'decessi',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return decessiOggi + "<br>" + (rateoDecessi<0?"":"+") + rateoDecessi;},
+    colors:              ['red', 'black'],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+
+  var totDecessi = Circles.create({
+    id:                  'totDecessi',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               8,
+    text:                function(value){return totaleDecessi;},
+    colors:              ["darkred"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+
+  var totCasi = Circles.create({
+    id:                  'totCasiNaz',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return casi;},
+    colors:              ["#5828a6"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+}
+
+function callRegione(call, callback, regione){
+  var xhr = new XMLHttpRequest();
+
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        callback(xhr.response, regione);
+      }
+    }
+  }
+
+  xhr.open(call.method, call.url, call.asynchronous);
+  xhr.send();
+}
+
+function displayRegione(regione){
   var casi = new Array();
   var dates = new Array();
   var positivi = new Array();
@@ -423,7 +581,7 @@ function displayRegione(response, regione){
     }
   }
 
-  resp.forEach(parseDatass);
+  responseRegioni.forEach(parseDatass);
 
   for(var i = 0; i < dates.length; i++){
     dates[i] = formatDate(dates[i]);
@@ -444,7 +602,9 @@ function displayRegione(response, regione){
   percentualeContagi = percentualeContagi.toFixed(2);
 
   var ctx = document.getElementById('AndamentoGeneraleRegione').getContext('2d');
-  var chart = new Chart(ctx, {
+  if(chartRegione)
+    chartRegione.destroy();
+  chartRegione = new Chart(ctx, {
       // The type of chart we want to create
       type: 'line',
 
@@ -620,23 +780,8 @@ var totCasi = Circles.create({
 
 }
 
-function callProvincia(call, callback, provincia){
-  var xhr = new XMLHttpRequest();
 
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState === 4){
-      if(xhr.status === 200){
-        callback(xhr.response, provincia);
-      }
-    }
-  }
-
-  xhr.open(call.method, call.url, call.asynchronous);
-  xhr.send();
-}
-
-function displayProvincia(response, provincia){
-  let resp = JSON.parse(response);
+function displayProvincia(provincia){
   var casi = new Array();
   var dates = new Array();
   var positivi = new Array();
@@ -648,7 +793,7 @@ function displayProvincia(response, provincia){
     }
   }
 
-  resp.forEach(parseDatass);
+  responseProvince.forEach(parseDatass);
 
   for(var i = 0; i < dates.length; i++){
     dates[i] = formatDate(dates[i]);
@@ -664,7 +809,9 @@ function displayProvincia(response, provincia){
   var casiOggi = casi[casi.length - 1] - casi[casi.length - 2];
 
   var ctx = document.getElementById('AndamentoGeneraleProvincia').getContext('2d');
-  var chart = new Chart(ctx, {
+  if(chartProvincia)
+    chartProvincia.destroy();
+  var chartProvincia = new Chart(ctx, {
       // The type of chart we want to create
       type: 'line',
 
@@ -682,24 +829,6 @@ function displayProvincia(response, provincia){
       // Configuration options go here
       options: {}
   });
-
-/*  new Chart(document.getElementById("positiviDecessi"), {
-    type: 'pie',
-    data: {
-      labels: ["Positivi", "Decessi"],
-      datasets: [{
-        label: "Population (millions)",
-        backgroundColor: ["green", "red"],
-        data: [positiviOggi, decessiOggi]
-      }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Positivi e Decessi'
-      }
-    }
-  });*/
 
   var positiviOggi = Circles.create({
     id:                  'positiviPro',
