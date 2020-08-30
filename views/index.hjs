@@ -110,7 +110,7 @@
       </div>
     </div>
   </body>
-  <footer style = "width: 100%; height: auto; background-color: black; padding-top: 2.5%; padding-bottom: 2.5%;">
+  <footer style = "width: 100%; height: auto; background-color: black; padding-top: 3.5%; padding-bottom: 3.5%;">
     <p><a href = "https://github.com/pcm-dpc/COVID-19" style = "color: lightgrey;">Sorgente dati Italia</a></p>
     <p><a href = "https://opendata.ecdc.europa.eu" style = "color: lightgrey;">Sorgente dati resto del mondo</a></p>
     <p><a href = "https://github.com/manuelsava/updates-covid19" style = "color: lightgrey;">GitHub</a></p>
