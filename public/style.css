@@ -33,6 +33,16 @@ footer p{
   font-size: 20px!important;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1000px) {
+  footer p{
+    font-size: 40px!important;
+  }
 
+  .prefooter{
+    height: 20%!important;
+  }
+
+  .paypalButton{
+    width: 30%;
+  }
 }

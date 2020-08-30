@@ -99,7 +99,7 @@
     <select class="js-example-responsive" id="SelectProvincia" onchange="loadProvinciaDatas(this.value)">
     </select>
     <canvas id="AndamentoGeneraleProvincia"></canvas>
-    <div style = "height: 55%;">
+    <div class = "prefooter" style = "height: 55%;">
       <div class = "circles" style = "text-align:center; float:left;">
         <h4>Nuovi positivi</h4>
         <div data-aos="flip-left" class="circle" id="positiviPro"></div>
@@ -110,26 +110,19 @@
       </div>
     </div>
   </body>
-  <footer style = "Width: 100%; height: auto; background-color: black; padding-top: 2.5%; padding-bottom: 2.5%;">
+  <footer style = "width: 100%; height: auto; background-color: black; padding-top: 2.5%; padding-bottom: 2.5%;">
     <p><a href = "https://github.com/pcm-dpc/COVID-19" style = "color: lightgrey;">Sorgente dati Italia</a></p>
     <p><a href = "https://opendata.ecdc.europa.eu" style = "color: lightgrey;">Sorgente dati resto del mondo</a></p>
     <p><a href = "https://github.com/manuelsava/updates-covid19" style = "color: lightgrey;">GitHub</a></p>
+    <br>
     <p style = "color: lightgrey;"> Ti piace questo Servizio? Offrimi un caffè! </p>
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
       <input type="hidden" name="cmd" value="_s-xclick" />
       <input type="hidden" name="hosted_button_id" value="5S8FSDUGDHVVJ" />
-      <input type="image" src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Fai una donazione con il pulsante PayPal" />
+      <input type="image" class = "paypalButton" src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Fai una donazione con il pulsante PayPal" />
       <img alt="" border="0" src="https://www.paypal.com/it_IT/i/scr/pixel.gif" width="1" height="1" />
     </form>
   </footer>
-<!--  <footer style="width: 100%; height: 20%; background-color: black">
-    <p> GitHub </p>
-    <div class = "logos" style = "width: 33%!important; margin-left: 33%!important; display:inline; margin:0;">
-      <p> Share: </p>
-      <a href"whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img src = "whatsapp-icon.png" style ="width:48px; height: 48px;">
-      <img src = "telegram-icon.webp" style ="width:70px; height: 70px; margin-left: 1%;">
-    </div>
-  </footer> -->
 </html>
 
 <script src = "circles.js"></script>
