@@ -127,6 +127,10 @@
 <script src="functions.js"></script>
 <script type = "text/javascript">
 var cookieNazione = getCookie("nazione");
+if(cookieNazione.localeCompare("") == 0){
+  document.cookie = "nazione=" + "Italy";
+  cookieNazione = "Italy";
+}
 getResource(RegioniCallObj, fillSelectRegione);
 getResource(ProvinciaCallObj, fillSelectProvincia);
 fillNations(cookieNazione);
