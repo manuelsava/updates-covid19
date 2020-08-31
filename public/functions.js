@@ -100,16 +100,21 @@ function fillSelectProvincia(response){
   }
 
   function fill(item, index, arr){
-    if (!visited.includes(item.sigla_provincia)){
+    if (!visited.includes(item.sigla_provincia) && item.sigla_provincia != null){
       visited.push(item.sigla_provincia);
-      if(provinciaCookie.localeCompare(item.sigla_provincia) == 0)
-        $('#SelectProvincia').append('<option selected value="' + item.sigla_provincia + '">' + item.sigla_provincia + '</option>');
-      else
-        $('#SelectProvincia').append('<option value="' + item.sigla_provincia + '">' + item.sigla_provincia + '</option>');
     }
   }
 
+  function fillSorted(item){
+    if(provinciaCookie.localeCompare(item) == 0)
+      $('#SelectProvincia').append('<option selected value="' + item + '">' + item + '</option>');
+    else
+      $('#SelectProvincia').append('<option value="' + item + '">' + item + '</option>');
+  }
+
   resp.forEach(fill)
+  visited.sort();
+  visited.forEach(fillSorted)
   displayProvincia(provinciaCookie);
 }
 
