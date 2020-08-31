@@ -96,7 +96,12 @@ footer p{
   }
 
   .prefooter{
-    height: 20%!important;
+    height: 30%!important;
+  }
+
+  footer{
+    padding-top: 5%!important;
+    padding-bottom: 5%!important;
   }
 
   .paypalButton{
