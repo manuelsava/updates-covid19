@@ -1,9 +1,3 @@
-$(document).ready(function() {
-    $('#country').select2();
-    $('#SelectRegione').select2();
-    $('#SelectProvincia').select2();
-});
-
 var chartNazione = null;
 var chartRegione = null;
 var chartRegione = null;

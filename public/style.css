@@ -25,6 +25,51 @@ footer p{
   margin-bottom: 15%;
 }
 
+.box {
+  position: relative;
+  margin-left: 33%;
+  margin-right: 33%;
+}
+
+.box select {
+  text-align: center;
+  background-color: steelblue;
+  color: white;
+  padding: 12px;
+  width: 93.5%;
+  border: none;
+  font-size: 22px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+.box::before {
+  content: "\f13a";
+  font-family: FontAwesome;
+  position: relative;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 50%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.box:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+  padding: 30px;
+}
+
 footer{
   text-align: center;
 }
@@ -34,6 +79,10 @@ footer p{
 }
 
 @media screen and (max-width: 1000px) {
+  .box select{
+    width: 91%;
+  }
+
   h2 {
     font-size: 45px!important;
   }

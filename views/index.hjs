@@ -31,8 +31,10 @@
     <h2 style = "text-align: center"> Ottieni informazioni in tempo reale sull'andamento di tutte le nazioni e delle regioni e province italiane </h2><br>
     <h2 id= "ultimoAggiornamento" style = "text-align:center;"></h2><br>
     <h2 style = "text-align: center"> Seleziona Nazione </h2>
-    <select class="js-example-responsive" id="country" onchange="loadNazioneDatas(this.value)">
-    </select>
+    <div class = "box">
+      <select id="country" onchange="loadNazioneDatas(this.value)">
+      </select>
+    </div>
     <canvas id="AndamentoGenerale"></canvas>
     <div class = "circles" style = "text-align:center; float:left;">
       <h4>Positivi</h4>
@@ -72,8 +74,10 @@
     </div>
 
     <h2 style = "text-align:center;"> Seleziona Regione </h2>
-    <select class="js-example-responsive" id="SelectRegione" onchange="loadRegioneDatas(this.value)" style = "width: 33%!important">
-    </select>
+\    <div class = "box">
+      <select id="SelectRegione" onchange="loadRegioneDatas(this.value)">
+      </select>
+    </div>
 
     <canvas id="AndamentoGeneraleRegione"></canvas>
     <div class = "circles" style = "text-align:center; float:left;">
@@ -114,8 +118,10 @@
     </div>
 
     <h2 style = "text-align:center;"> Seleziona Provincia </h2>
-    <select class="js-example-responsive" id="SelectProvincia" onchange="loadProvinciaDatas(this.value)">
-    </select>
+    <div class = "box">
+      <select id="SelectProvincia" onchange="loadProvinciaDatas(this.value)">
+      </select>
+    </div>
     <canvas id="AndamentoGeneraleProvincia"></canvas>
     <div class = "prefooter" style = "height: 55%;">
       <div class = "circles" style = "text-align:center; float:left;">
