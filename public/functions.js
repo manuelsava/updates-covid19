@@ -55,7 +55,6 @@ function formatDate(date){
 }
 
 function getResource(call, callback, nazione){
-  $('.loaderBox').css('display','block');
   var xhr = new XMLHttpRequest();
 
   xhr.onreadystatechange = function(){
@@ -68,7 +67,6 @@ function getResource(call, callback, nazione){
 
   xhr.open(call.method, call.url, call.asynchronous);
   xhr.send();
-  $('.loaderBox').css('display','none');
 }
 
 function fillNations(nazioneCookie){
