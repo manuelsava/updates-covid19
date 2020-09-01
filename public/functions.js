@@ -27,7 +27,7 @@ const ProvinciaCallObj = {
 const NationsCallObj = {
   method: 'GET',
   url: 'https://cors-anywhere.herokuapp.com/https://opendata.ecdc.europa.eu/covid19/casedistribution/json/',
-  asynchronous: false,
+  asynchronous: true,
 }
 
 function getCookie(cname) {
