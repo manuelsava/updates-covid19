@@ -55,12 +55,14 @@ function formatDate(date){
 }
 
 function getResource(call, callback, nazione){
+  $('.loaderBox').css('display','block');
   var xhr = new XMLHttpRequest();
 
   xhr.onreadystatechange = function(){
     if(xhr.readyState === 4){
       if(xhr.status === 200){
         callback(xhr.response, nazione);
+        $('.loaderBox').css('display','none');
       }
     }
   }

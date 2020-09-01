@@ -31,6 +31,42 @@ footer p{
   margin-right: 33%;
 }
 
+.loaderBox{
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+}
+
+.loader {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+  margin-bottom: 20%;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid darkorange;
+  width: 240px;
+  height: 240px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .box select {
   text-align: center;
   background-color: steelblue;
@@ -81,6 +117,10 @@ footer p{
 @media screen and (max-width: 1000px) {
   .box select{
     width: 91%;
+  }
+
+  .loader{
+    margin-top: 65%;
   }
 
   h2 {
