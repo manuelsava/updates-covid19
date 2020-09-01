@@ -62,13 +62,13 @@ function getResource(call, callback, nazione){
     if(xhr.readyState === 4){
       if(xhr.status === 200){
         callback(xhr.response, nazione);
-        $('.loaderBox').css('display','none');
       }
     }
   }
 
   xhr.open(call.method, call.url, call.asynchronous);
   xhr.send();
+  $('.loaderBox').css('display','none');
 }
 
 function fillNations(nazioneCookie){
