@@ -32,7 +32,6 @@ footer p{
 }
 
 .loaderBox{
-  display: none;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -41,7 +40,6 @@ footer p{
 }
 
 .loader {
-  display: block;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20%;

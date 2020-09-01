@@ -163,14 +163,12 @@ if(cookieNazione.localeCompare("") == 0){
   document.cookie = "nazione=" + "Italy";
   cookieNazione = "Italy";
 }
-$('.loaderBox').css('display','block');
 getResource(RegioniCallObj, fillSelectRegione);
 getResource(ProvinciaCallObj, fillSelectProvincia);
 fillNations(cookieNazione);
 //getResource(NationsCallObj, fillSelectNazione);
 
   function loadNazioneDatas(nazione){
-    $('.loaderBox').css('display','block');
     if(nazione.localeCompare("Italy") == 0){
       getResource(ajaxcallObj, displayNazione);
       $('.none').css('display','block');
@@ -182,7 +180,6 @@ fillNations(cookieNazione);
       $('.fullscreen').css('width','100%');
     }
     document.cookie = "nazione=" + nazione;
-    $('.loaderBox').css('display','none');
   }
 
   function loadRegioneDatas(regione){
@@ -202,7 +199,6 @@ fillNations(cookieNazione);
     $('.none').css('display','none');
     $('.fullscreen').css('width','100%');
   }
-$('.loaderBox').css('display','none');
 </script>
 <script>
   AOS.init();
