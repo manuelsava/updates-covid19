@@ -126,7 +126,7 @@
       </select>
     </div>
     <canvas id="AndamentoGeneraleProvincia"></canvas>
-    <div class = "prefooter" style = "height: 55%;">
+    <div class = "prefooter">
       <div class = "circles" style = "text-align:center; float:left;">
         <h4>Nuovi positivi</h4>
         <div data-aos="flip-left" class="circle" id="positiviPro"></div>

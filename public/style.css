@@ -103,6 +103,10 @@ footer p{
   padding: 30px;
 }
 
+.prefooter{
+  height: 55%;
+}
+
 footer{
   text-align: center;
 }
@@ -111,7 +115,13 @@ footer p{
   font-size: 20px!important;
 }
 
-@media screen and (max-width: 1000px) {
+@media only screen and (min-device-width: 701px) and (max-device-width: 1000px) and (max-device-height: 700px){
+  .prefooter{
+    height: 75%!important;
+  }
+}
+
+@media only screen and (max-device-width: 600px) {
   .box select{
     width: 91%;
   }
