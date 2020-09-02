@@ -431,11 +431,15 @@ function displayOtherNazione(response, nazioneCookie){
 
   function parseDatass(item, index, arr){
     if(nazioneCookie.localeCompare(item.countriesAndTerritories) == 0){
-      positivi.push(item.cases);
-      dates.push(item.dateRep);
-      decessi.push(item.deaths);
-      casi += item.cases;
-      totaleDecessi += item.deaths;
+      if(item.cases >= 0){
+        positivi.push(item.cases);
+        dates.push(item.dateRep);
+        casi += item.cases;
+      }
+      if(item.deaths >= 0){
+        decessi.push(item.deaths);
+        totaleDecessi += item.deaths;
+      }
     }
   }
 
