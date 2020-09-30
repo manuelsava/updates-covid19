@@ -1,5 +1,10 @@
 body{
   background-color: ghostwhite;
+  font-family: Sukhumvit Set!important;
+}
+
+h4 {
+  font-size: 25px!important;
 }
 
 footer{
@@ -104,7 +109,7 @@ footer p{
 }
 
 .prefooter{
-  height: 55%;
+  height: 60%;
 }
 
 footer{
