@@ -192,7 +192,10 @@ function displayNazione(response){
   var dimessiGuariti = new Array();
 
   function parseDatass(item, index, arr){
-    casi.push(item.nuovi_positivi);
+    if(item.nuovi_positivi >= 0)
+      casi.push(item.nuovi_positivi);
+    else
+      casi.push(0);
     dates.push(item.data);
     decessi.push(item.deceduti);
     terapia.push(item.terapia_intensiva);
@@ -575,7 +578,10 @@ function displayRegione(regione){
 
   function parseDatass(item, index, arr){
     if(regione.localeCompare(item.denominazione_regione) == 0){
-      casi.push(item.nuovi_positivi);
+      if(item.nuovi_positivi >= 0)
+        casi.push(item.nuovi_positivi);
+      else
+        casi.push(0);
       dates.push(item.data);
       decessi.push(item.deceduti);
       terapia.push(item.terapia_intensiva);
