@@ -30,7 +30,7 @@
     <div class = "loaderBox">
       <div class = "loader"></div>
     </div>
-    <marquee behavior="scroll" direction="left" style = "background-color: #bf0000;" scrollamount="10"><h2 style = "color: white;">Live Covid-19 - Ottieni informazioni in tempo reale sull'andamento di tutte le nazioni e delle regioni e province italiane</h2></marquee>
+    <marquee behavior="scroll" direction="left" style = "background-color: #bf0000;" scrollamount="10"><h2 style = "color: white;">Live Covid-19 - Aggiornamento ore 17:00 Italia || ore 10:00 resto del mondo.</h2></marquee>
     <h2 id= "ultimoAggiornamento" style = "text-align:center;"></h2><br>
     <h2 style = "text-align: center"> Seleziona Nazione </h2>
     <div class = "box">
