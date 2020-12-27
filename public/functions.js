@@ -213,6 +213,8 @@ function displayNazione(response){
   }
 
   document.getElementById("ultimoAggiornamento").innerHTML = "Ultimo aggiornamento <br>" + dates[dates.length - 1];
+  $("#positiviHeader").text("Positivi questa settimana");
+  $("#decedutiHeader").text("Deceduti questa settimana");
 
   var guaritiOggi = dimessiGuariti[dimessiGuariti.length - 2] - dimessiGuariti[dimessiGuariti.length - 3];
   var positiviOggi = casi[casi.length - 1];
@@ -425,6 +427,8 @@ function displayOtherNazione(response, nazioneCookie){
   response = response.substring(start, response.length - 2);
   var finalResponse = "[" + response;
 
+  console.log(finalResponse);
+
   let resp = JSON.parse(finalResponse);
   var casi = 0;
   var dates = new Array();
@@ -434,15 +438,11 @@ function displayOtherNazione(response, nazioneCookie){
 
   function parseDatass(item, index, arr){
     if(nazioneCookie.localeCompare(item.countriesAndTerritories) == 0){
-      if(item.cases >= 0){
-        positivi.push(item.cases);
-        dates.push(item.dateRep);
-        casi += item.cases;
-      }
-      if(item.deaths >= 0){
-        decessi.push(item.deaths);
-        totaleDecessi += item.deaths;
-      }
+      positivi.push(item.cases_weekly);
+      dates.push(item.dateRep);
+      casi += item.cases_weekly;
+      decessi.push(item.deaths_weekly);
+      totaleDecessi += item.deaths_weekly;
     }
   }
 
@@ -453,6 +453,8 @@ function displayOtherNazione(response, nazioneCookie){
   decessi.reverse();
 
   document.getElementById("ultimoAggiornamento").innerHTML = "Ultimo aggiornamento <br>" + dates[dates.length - 1];
+  document.getElementById("positiviHeader").innerHTML = "Positivi questa settimana";
+  document.getElementById("decedutiHeader").innerHTML = "Deceduti questa settimana";
 
   var positiviOggi = positivi[positivi.length - 1];
   var rateoPositivi = positiviOggi - positivi[positivi.length - 2];
