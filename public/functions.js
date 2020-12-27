@@ -213,8 +213,8 @@ function displayNazione(response){
   }
 
   document.getElementById("ultimoAggiornamento").innerHTML = "Ultimo aggiornamento <br>" + dates[dates.length - 1];
-  $("#positiviHeader").text("Positivi questa settimana");
-  $("#decedutiHeader").text("Deceduti questa settimana");
+  document.getElementById("positiviHeader").innerHTML = "Positivi";
+  document.getElementById("decedutiHeader").innerHTML = "Deceduti";
 
   var guaritiOggi = dimessiGuariti[dimessiGuariti.length - 2] - dimessiGuariti[dimessiGuariti.length - 3];
   var positiviOggi = casi[casi.length - 1];
