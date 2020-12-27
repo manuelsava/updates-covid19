@@ -453,8 +453,8 @@ function displayOtherNazione(response, nazioneCookie){
   decessi.reverse();
 
   document.getElementById("ultimoAggiornamento").innerHTML = "Ultimo aggiornamento <br>" + dates[dates.length - 1];
-  document.getElementById("positiviHeader").innerHTML = "Positivi questa settimana";
-  document.getElementById("decedutiHeader").innerHTML = "Deceduti questa settimana";
+  document.getElementById("positiviHeader").innerHTML = "Positivi settimana";
+  document.getElementById("decedutiHeader").innerHTML = "Deceduti settimana";
 
   var positiviOggi = positivi[positivi.length - 1];
   var rateoPositivi = positiviOggi - positivi[positivi.length - 2];
