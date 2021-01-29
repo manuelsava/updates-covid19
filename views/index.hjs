@@ -32,6 +32,7 @@
     </div>
     <marquee behavior="scroll" direction="left" style = "background-color: #bf0000;" scrollamount="10"><h2 style = "color: white;">Live Covid-19 - Aggiornamento ore 17:00 Italia || Ogni lunedì resto del mondo</h2></marquee>
     <h2 id= "ultimoAggiornamento" style = "text-align:center;"></h2><br>
+    <h2 id = "ultimoAggiornamentoVaccini" style = "text-align: center;"></h2><br>
     <h2 style = "text-align: center"> Seleziona Nazione </h2>
     <div class = "box">
       <select id="country" onchange="loadNazioneDatas(this.value)">
@@ -47,12 +48,12 @@
       <div class="circle" id="decessi" data-aos="flip-left"></div>
     </div>
     <div class = "circles none" style = "text-align:center; float:left;">
-      <h4>Tamponi Oggi</h4>
-      <div data-aos="flip-left" class="circle" id="tamponi"></div>
-    </div>
-    <div class = "circles none" style = "text-align:center; float:left;">
       <h4>Totale Positivi</h4>
       <div data-aos="flip-left" class="circle" id="totPositivi"></div>
+    </div>
+    <div class = "circles none" style = "text-align:center; float:left;">
+      <h4>Tamponi Oggi</h4>
+      <div data-aos="flip-left" class="circle" id="tamponi"></div>
     </div>
     <div class = "circles none" style = "text-align:center; float:left;">
       <h4>Guariti oggi</h4>
@@ -74,6 +75,18 @@
       <h4>Totale Casi</h4>
       <div data-aos="flip-left" class="circle" id="totCasiNaz"></div>
     </div>
+    <div class = "circles none" style = "text-align:center; float:left;">
+      <h4>Totale Prima Dose</h4>
+      <div data-aos="flip-left" class="circle" id="primaDoseNaz"></div>
+    </div>
+    <div class = "circles none" style = "text-align:center; float:left;">
+      <h4>Torale Seconda Dose</h4>
+      <div data-aos="flip-left" class="circle" id="secondaDoseNaz"></div>
+    </div>
+    <div class = "circles none" style = "text-align:center; float:left;">
+      <h4>Fascia più vaccinata</h4>
+      <div data-aos="flip-left" class="circle" id="fasciaNaz"></div>
+    </div>
 
     <h2 style = "text-align:center;"> Seleziona Regione </h2>
     <div class = "box">
@@ -91,12 +104,12 @@
       <div class="circle" id="decessiReg" data-aos="flip-left"></div>
     </div>
     <div class = "circles" style = "text-align:center; float:left;">
-      <h4>Tamponi Oggi</h4>
-      <div data-aos="flip-left" class="circle" id="tamponiReg"></div>
-    </div>
-    <div class = "circles" style = "text-align:center; float:left;">
       <h4>Totale Positivi</h4>
       <div data-aos="flip-left" class="circle" id="totPositiviReg"></div>
+    </div>
+    <div class = "circles" style = "text-align:center; float:left;">
+      <h4>Tamponi Oggi</h4>
+      <div data-aos="flip-left" class="circle" id="tamponiReg"></div>
     </div>
     <div class = "circles" style = "text-align:center; float:left;">
       <h4>Guariti oggi</h4>
@@ -170,6 +183,7 @@ fillNations(cookieNazione);
   function loadNazioneDatas(nazione){
     if(nazione.localeCompare("Italy") == 0){
       getResource(ajaxcallObj, displayNazione);
+      getResource(SomministrazioniVacciniObj, displaySomministrazioneVaccini);
       $('.none').css('display','block');
       $('.fullscreen').css('width','33%');
     }
@@ -193,6 +207,7 @@ fillNations(cookieNazione);
 
   if(cookieNazione.localeCompare("Italy") == 0){
     getResource(ajaxcallObj, displayNazione);
+    getResource(SomministrazioniVacciniObj, displaySomministrazioneVaccini);
   }else{
     getResource(NationsCallObj, displayOtherNazione, cookieNazione);
     $('.none').css('display','none');

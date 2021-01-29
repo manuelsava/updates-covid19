@@ -30,6 +30,12 @@ const NationsCallObj = {
   asynchronous: true,
 }
 
+const SomministrazioniVacciniObj = {
+  method: 'GET',
+  url: 'https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/anagrafica-vaccini-summary-latest.json',
+  asynchronous: true,
+}
+
 function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
@@ -63,6 +69,21 @@ function getResource(call, callback, nazione){
       if(xhr.status === 200){
         callback(xhr.response, nazione);
         $('.loaderBox').css('display','none');
+      }
+    }
+  }
+
+  xhr.open(call.method, call.url, call.asynchronous);
+  xhr.send();
+}
+
+function getRosourceVaccini(call, callback){
+  var xhr = new XMLHttpRequest();
+
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        callback(xhr.response);
       }
     }
   }
@@ -259,7 +280,7 @@ function displayNazione(response){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return positiviOggi + "<br>" + (rateoPositivi<0?"":"+") + rateoPositivi;},
-    colors:              ["green", "#ec716f"],
+    colors:              ["#c39eff"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -276,7 +297,7 @@ function displayNazione(response){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return decessiOggi + "<br>" + (rateoDecessi<0?"":"+") + rateoDecessi;},
-    colors:              ['red', 'black'],
+    colors:              ['#c39eff'],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -293,7 +314,7 @@ function displayNazione(response){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return terapiaOggi + "<br>" + (rateoTerapia<0?"":"+") + rateoTerapia;},
-    colors:              ["orange"],
+    colors:              ["#fc565b"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -310,7 +331,7 @@ function displayNazione(response){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return guaritiOggi;},
-    colors:              ["#427bf5"],
+    colors:              ["lightblue"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -327,7 +348,7 @@ function displayNazione(response){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return dimessiGuariti[dimessiGuariti.length -1];},
-    colors:              ["#42cbf5"],
+    colors:              ["lightblue"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -362,7 +383,7 @@ function displayNazione(response){
     maxValue:            100000000,
     width:               8,
     text:                function(value){return totalePositivi[totalePositivi.length - 1] + "<br>" + (rateoTotalePositivi<0?"":"+") + rateoTotalePositivi;},
-    colors:              ["lightgreen"],
+    colors:              ["#c39eff"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -379,7 +400,7 @@ function displayNazione(response){
     maxValue:            100000000,
     width:               8,
     text:                function(value){return totaleDecessi;},
-    colors:              ["darkred"],
+    colors:              ["#fc565b"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -396,7 +417,87 @@ function displayNazione(response){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return totaleCasi[totaleCasi.length -1];},
-    colors:              ["#5828a6"],
+    colors:              ["#fc565b"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+}
+
+function displaySomministrazioneVaccini(response){
+  let resp = JSON.parse(response);
+  console.log(resp);
+  var data;
+
+  var totalePrimaDose = 0;
+  var totaleSecondaDose = 0;
+  var maxPerFascia = 0;
+  var fasciaMax = "";
+  
+  function parseDatas(item, index, arr){
+    totalePrimaDose += item.prima_dose;
+    totaleSecondaDose += item.seconda_dose;
+    data = item.ultimo_aggiornamento.substring(0, 10);
+    if((item.prima_dose + item.seconda_dose) > maxPerFascia ){
+      maxPerFascia = item.prima_dose + item.seconda_dose;
+      fasciaMax = item.fascia_anagrafica;
+    }
+  }
+
+  resp.data.forEach(parseDatas);
+  data = formatDate(data);
+  var totaleDosi = totalePrimaDose + totaleSecondaDose;
+  var percentualePrima = ((totalePrimaDose * 100) / totaleDosi).toFixed(2);
+  var percentualeSeconda = ((totaleSecondaDose * 100) / totaleDosi).toFixed(2);
+
+  document.getElementById("ultimoAggiornamentoVaccini").innerHTML = "Ultimo aggiornamento vaccini <br>" + data;
+
+  var circlePrimaDose = Circles.create({
+    id:                  'primaDoseNaz',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return totalePrimaDose + "<br>" + (percentualePrima + "%")},
+    colors:              ["lightgreen"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+
+  var circleSecondaDose = Circles.create({
+    id:                  'secondaDoseNaz',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return totaleSecondaDose + "<br>" + (percentualeSeconda + "%")},
+    colors:              ["lightgreen"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+
+  var circleFascia = Circles.create({
+    id:                  'fasciaNaz',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return fasciaMax},
+    colors:              ["lightgreen"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -426,8 +527,6 @@ function displayOtherNazione(response, nazioneCookie){
   var start = response.indexOf("{", 2);
   response = response.substring(start, response.length - 2);
   var finalResponse = "[" + response;
-
-  console.log(finalResponse);
 
   let resp = JSON.parse(finalResponse);
   var casi = 0;
@@ -644,7 +743,7 @@ function displayRegione(regione){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return positiviOggi + "<br>" + (rateoPositivi<0?"":"+") + rateoPositivi;},
-    colors:              ["green", "#ec716f"],
+    colors:              ["#c39eff"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -661,7 +760,7 @@ function displayRegione(regione){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return decessiOggi + "<br>" + (rateoDecessi<0?"":"+") + rateoDecessi;},
-    colors:              ['red', 'black'],
+    colors:              ["#c39eff"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -678,7 +777,7 @@ function displayRegione(regione){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return terapiaOggi + "<br>" + (rateoTerapia<0?"":"+") + rateoTerapia;},
-    colors:              ["orange"],
+    colors:              ["#fc565b"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -695,7 +794,7 @@ function displayRegione(regione){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return guaritiOggi;},
-    colors:              ["#427bf5"],
+    colors:              ["lightblue"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -712,7 +811,7 @@ function displayRegione(regione){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return dimessiGuariti[dimessiGuariti.length -1];},
-    colors:              ["#42cbf5"],
+    colors:              ["lightblue"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -747,7 +846,7 @@ function displayRegione(regione){
     maxValue:            100000000,
     width:               8,
     text:                function(value){return totalePositivi[totalePositivi.length - 1] + "<br>" + (rateoTotalePositivi<0?"":"+") + rateoTotalePositivi;},
-    colors:              ["lightgreen"],
+    colors:              ["#c39eff"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -764,7 +863,7 @@ function displayRegione(regione){
     maxValue:            100000000,
     width:               8,
     text:                function(value){return totaleDecessi;},
-    colors:              ["darkred"],
+    colors:              ["#fc565b"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -781,7 +880,7 @@ var totCasi = Circles.create({
   maxValue:            100000000,
   width:               10,
   text:                function(value){return totaleCasi[totaleCasi.length -1];},
-  colors:              ["#5828a6"],
+  colors:              ["#fc565b"],
   duration:            400,
   wrpClass:            'circles-wrp',
   textClass:           'circles-text',
@@ -850,7 +949,7 @@ function displayProvincia(provincia){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return casiOggi;},
-    colors:              ["green", "#ec716f"],
+    colors:              ["#c39eff"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
@@ -867,7 +966,7 @@ function displayProvincia(provincia){
     maxValue:            100000000,
     width:               10,
     text:                function(value){return casi[casi.length - 1];},
-    colors:              ["#5828a6"],
+    colors:              ["#fc565b"],
     duration:            400,
     wrpClass:            'circles-wrp',
     textClass:           'circles-text',
