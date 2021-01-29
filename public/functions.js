@@ -36,6 +36,36 @@ const SomministrazioniVacciniObj = {
   asynchronous: true,
 }
 
+const SomministrazioniVacciniRegObj = {
+  method: 'GET',
+  url: 'https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/vaccini-summary-latest.json',
+  asynchronous: true,
+}
+
+var mapRegioni = {
+  'Abruzzo' : 'ABR',
+  'Basilicata' : 'BAS',
+  'Calabria' : 'CAL',
+  'Campania' : 'CAM',
+  'Emilia-Romagna' : 'EMR',
+  'Friuli Venezia Giulia' : 'FVG',
+  'Lazio' : 'LAZ',
+  'Liguria' : 'LIG',
+  'Marche' : 'MAR',
+  'Molise' : 'MOL',
+  'P.A. Bolzano' : 'PAL',
+  'P.A. Trento' : 'PAT',
+  'Piemonte' : 'PIE',
+  'Puglia': 'PUG',
+  'Sardegna' : 'SAR',
+  'Toscana' : 'TOS',
+  'Sicilia' : 'SIC',
+  'Umbria' : 'UMB',
+  "Valle d'Aosta" : 'VDA',
+  'Veneto' : 'VEN',
+  'Lombardia': 'LOM' 
+}
+
 function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
@@ -78,6 +108,21 @@ function getResource(call, callback, nazione){
 }
 
 function getRosourceVaccini(call, callback){
+  var xhr = new XMLHttpRequest();
+
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        callback(xhr.response);
+      }
+    }
+  }
+
+  xhr.open(call.method, call.url, call.asynchronous);
+  xhr.send();
+}
+
+function getResourceVacciniRegione(call, callback){
   var xhr = new XMLHttpRequest();
 
   xhr.onreadystatechange = function(){
@@ -890,6 +935,77 @@ var totCasi = Circles.create({
   styleText:           true
 });
 
+}
+
+function displayVacciniRegione(response){
+  let resp = JSON.parse(response);
+  var regioneCookie = getCookie("regione");
+  var mapValue = mapRegioni[regioneCookie];
+
+  var dosiConsegnate = 0;
+  var dosiSomministrate = 0;
+  var percentualeSomministrazione = 0.0;
+  
+  function parseDatas(item, index, arr){
+    if(item.area.localeCompare(mapValue) == 0){
+      dosiConsegnate = item.dosi_consegnate;
+      dosiSomministrate = item.dosi_somministrate;
+      percentualeSomministrazione = item.percentuale_somministrazione;
+    }
+  }
+
+  resp.data.forEach(parseDatas);
+
+  var circleConsegnate = Circles.create({
+    id:                  'dosiConsegnate',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return dosiConsegnate},
+    colors:              ["lightgreen"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+
+  var circleSomministrate = Circles.create({
+    id:                  'dosiSomministrate',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return dosiSomministrate},
+    colors:              ["lightgreen"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
+
+  var circlePercentualeSomm = Circles.create({
+    id:                  'percentualeSomm',
+    radius:              90,
+    value:               1000,
+    maxValue:            100000000,
+    width:               10,
+    text:                function(value){return percentualeSomministrazione + "%"},
+    colors:              ["lightgreen"],
+    duration:            400,
+    wrpClass:            'circles-wrp',
+    textClass:           'circles-text',
+    valueStrokeClass:    'circles-valueStroke',
+    maxValueStrokeClass: 'circles-maxValueStroke',
+    styleWrapper:        true,
+    styleText:           true
+  });
 }
 
 
