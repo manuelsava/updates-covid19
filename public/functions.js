@@ -524,7 +524,7 @@ function displaySomministrazioneVaccini(response){
     value:               1000,
     maxValue:            100000000,
     width:               10,
-    text:                function(value){return totaleSecondaDose + "<br>" + (percentualeSeconda + "%")},
+    text:                function(value){return totaleSecondaDose + "<br>" + (percentualeSeconda + "%<br>")},
     colors:              ["lightgreen"],
     duration:            400,
     wrpClass:            'circles-wrp',

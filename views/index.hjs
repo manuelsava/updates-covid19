@@ -140,7 +140,7 @@
       <div data-aos="flip-left" class="circle" id="dosiSomministrate"></div>
     </div>
     <div class = "circles" style = "text-align:center; float:left;">
-      <h4>Percentuale Somministrazione</h4>
+      <h4>Rapporto Dosi</h4>
       <div data-aos="flip-left" class="circle" id="percentualeSomm"></div>
     </div>
 
