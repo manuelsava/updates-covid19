@@ -940,8 +940,13 @@ var totCasi = Circles.create({
 function displayVacciniRegione(response){
   let resp = JSON.parse(response);
   var regioneCookie = getCookie("regione");
-  var mapValue = mapRegioni[regioneCookie];
 
+  if(regioneCookie.localeCompare("") == 0){
+    document.cookie = "regione=" + "Lombardia";
+    regioneCookie = "Lombardia";
+  }
+
+  var mapValue = mapRegioni[regioneCookie];
   var dosiConsegnate = 0;
   var dosiSomministrate = 0;
   var percentualeSomministrazione = 0.0;
