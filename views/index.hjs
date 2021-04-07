@@ -30,7 +30,7 @@
     <div class = "loaderBox">
       <div class = "loader"></div>
     </div>
-    <marquee behavior="scroll" direction="left" style = "background-color: #bf0000;" scrollamount="10"><h2 style = "color: white;">Live Covid-19 - Aggiornamento ore 17:00 Italia || Ogni lunedì resto del mondo</h2></marquee>
+    <marquee behavior="scroll" direction="left" style = "background-color: #bf0000;" scrollamount="10"><h2 style = "color: white;">Live Covid-19 - Aggiornamento ogni giorno ore 17:00</h2></marquee>
     <h2 id= "ultimoAggiornamento" style = "text-align:center;"></h2><br>
     <h2 id = "ultimoAggiornamentoVaccini" style = "text-align: center;"></h2><br>
     <h2 style = "text-align: center"> Seleziona Nazione </h2>
