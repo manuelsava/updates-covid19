@@ -36,6 +36,7 @@
     <h2 style = "text-align: center"> Seleziona Nazione </h2>
     <div class = "box">
       <select id="country" onchange="loadNazioneDatas(this.value)">
+        <option value = "Italy">Italy</option>
       </select>
     </div>
     <canvas id="AndamentoGenerale"></canvas>
@@ -191,7 +192,7 @@ if(cookieNazione.localeCompare("") == 0){
 getResource(RegioniCallObj, fillSelectRegione);
 getResourceVacciniRegione(SomministrazioniVacciniRegObj, displayVacciniRegione);
 getResource(ProvinciaCallObj, fillSelectProvincia);
-fillNations(cookieNazione);
+//fillNations(cookieNazione);
 //getResource(NationsCallObj, fillSelectNazione);
 
   function loadNazioneDatas(nazione){
